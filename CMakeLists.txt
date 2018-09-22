@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.5)
+project(LawfulNeutral)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "-fPIC")
+set(CMAKE_C_FKAGS "-fPIC")
+include_directories(/usr/local/include)
+include_directories(./include)
+link_directories(/usr/local/lib)
+add_subdirectory(core)
+add_subdirectory(example)
+# add_subdirectory(util)
+

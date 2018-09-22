@@ -1,0 +1,10 @@
+# ninja log v5
+0	250	1536667315	core/CMakeFiles/core.dir/duh.cpp.o	7889bac4a6bfbf44
+250	349	1536667315	core/libcore.dylib	608a85ea78d4c325
+0	43	1536667738	core/CMakeFiles/core.dir/duh.cpp.o	7889bac4a6bfbf44
+0	47	1536667738	example/CMakeFiles/example.dir/main.cpp.o	156e1535a20ff61b
+43	88	1536667739	core/libcore.dylib	608a85ea78d4c325
+0	43	1536667837	core/CMakeFiles/core.dir/duh.cpp.o	7889bac4a6bfbf44
+0	46	1536667837	example/CMakeFiles/example.dir/main.cpp.o	ff5095a8ddc3ca99
+44	94	1536667837	core/libcore.dylib	608a85ea78d4c325
+94	136	1536667837	example/example	eb1f28a5bb6773b7

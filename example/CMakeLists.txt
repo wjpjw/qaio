@@ -1,0 +1,6 @@
+include_directories(../core/)
+link_directories(../core/)
+aux_source_directory(. DIRSRCS)
+add_executable(example ${DIRSRCS})
+find_package(TBB REQUIRED tbb)
+target_link_libraries(example core TBB::tbb)

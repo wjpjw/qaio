@@ -1,0 +1,5 @@
+include_directories(../util/)
+link_directories(../util/)
+aux_source_directory(. DIRSRCS)
+add_library(core SHARED ${DIRSRCS})
+target_link_libraries(core util)
