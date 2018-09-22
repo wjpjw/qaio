@@ -9,7 +9,7 @@
 5. 最终目标是在Linux（当然很容易移植到Unix-like）上搭建一个由现代c++实现的系统编程框架——在此基础上可以方便地构筑异步网络服务器、持久化和无持久化的MQ、高性能的日志系统、灾备、变更捕获与数据同步。
 
 ### 开发环境
-1. Mac上用ubuntu（docker容器）做调试系统。
+1. Mac上用ubuntu（docker容器）做调试系统，建好容器以后每次只需docker container attach，很方便。
 2. 用VS Code作编辑器，项目文件夹直连ubuntu容器。
 3. 用CMake+Ninja构建项目。
 4. 用现代c++，完全不用boost或其他库，非并发前提下用stl。
