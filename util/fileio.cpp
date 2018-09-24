@@ -4,9 +4,9 @@ int                                     fd_limit()
 {
     struct rlimit rlim;
     if(getrlimit(RLIMIT_NOFILE, &rlim)){
-        throw quasi_error(errno, "cannot getrlimit");
-    }else if(rlim.cur==RLIM_INFINITY){
-        return std:numeric_limits<int>::max();
+        throw quasi_error("cannot getrlimit");
+    }else if(rlim.rlim_cur==RLIM_INFINITY){
+        return std::numeric_limits<int>::max();
     }
     else{
         return rlim.rlim_cur;
@@ -17,7 +17,7 @@ void                                    dir_children(const std::string& dir, std
 {
     children.clear();
     DIR* d=opendir(dir.c_str());
-    if(d==nullptr) throw quasi_error(errno, "cannot opendir");
+    if(d==nullptr) throw quasi_error("cannot opendir");
     struct dirent* entry;
     while((entry=readdir(d))!=nullptr){
         children.emplace_back(entry->d_name);
@@ -25,11 +25,11 @@ void                                    dir_children(const std::string& dir, std
     closedir(d);
 }
 
-int64_t                                 file_size(const std::string& fname)
+uint64_t                                file_size(const std::string& fname)
 {
     struct stat sbuf;
     if (stat(fname.c_str(), &sbuf) != 0) {
-        throw quasi_error(errno, "cannot stat "+fname);
+        throw quasi_error("cannot stat "+fname);
     } else {
         return sbuf.st_size;
     }
@@ -39,7 +39,7 @@ bool                                    is_regular_file(str fname)
 {
     struct stat sbuf;
     if (stat(fname.c_str(), &sbuf) != 0) {
-        throw quasi_error(errno, "cannot stat "+fname);
+        throw quasi_error("cannot stat "+fname);
     } else {
         return S_ISREG(sbuf.st_mode);
     }
@@ -59,9 +59,9 @@ mmap_handle::mmap_handle(const std::string& fname, resource_cap* cap, bool is_re
 {
     if(!cap->acquire()) throw quasi_error("not enough mmap quota");
     fd_=open(fname.c_str(), O_RDONLY);
-    if(fd<0) {
+    if(fd_<0) {
         cap->release();
-        throw quasi_error(errno, "cannot open "+fname);
+        throw quasi_error("cannot open "+fname);
     }
     try{
         len_=file_size(fname);
@@ -71,13 +71,13 @@ mmap_handle::mmap_handle(const std::string& fname, resource_cap* cap, bool is_re
         throw;
     }
     if(is_readonly)
-        mapped_=mmap(nullptr, len_, PORT_READ, MAP_SHARED, fd_, 0);
+        mapped_=mmap(nullptr, len_, PROT_READ, MAP_SHARED, fd_, 0);
     else
-        mapped_=mmap(nullptr, len_, PORT_READ | PORT_WRITE, MAP_SHARED, fd_, 0);
-    if(mapped==MAP_FAILED){
+        mapped_=mmap(nullptr, len_, PROT_READ | PROT_WRITE, MAP_SHARED, fd_, 0);
+    if(mapped_==MAP_FAILED){
         cap->release();
         close(fd_);
-        throw quasi_error(errno, "cannot mmap "+fname);
+        throw quasi_error("cannot mmap "+fname);
     }
 }
 
@@ -96,7 +96,7 @@ void                                    reader::read_str(char* user_buf, size_t 
         auto bytes_read = read(fd_, user_buf, len);
         if (bytes_read < 0) {
             if (errno == EINTR) continue;  
-            throw quasi_error(errno,"cannot read "+fname_);    
+            throw quasi_error("cannot read "+fname_);    
         }
         break;
     }
@@ -108,7 +108,7 @@ void                                    writer::write_str(const char* what, size
         auto bytes_written = ::write(fd_, what, len);
         if (bytes_written < 0) {
             if (errno == EINTR) continue; 
-            throw quasi_error(errno, "cannot write "+fname_);
+            throw quasi_error("cannot write "+fname_);
         }
         what += bytes_written;
         len -= bytes_written;

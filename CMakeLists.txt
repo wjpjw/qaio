@@ -8,5 +8,5 @@ include_directories(./include)
 link_directories(/usr/local/lib)
 add_subdirectory(core)
 add_subdirectory(example)
-# add_subdirectory(util)
+add_subdirectory(util)
 

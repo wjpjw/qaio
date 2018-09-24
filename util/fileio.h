@@ -47,23 +47,23 @@ extern bool                             is_regular_file(str fname);
 
 static inline void                      truncate_file(str fname, uint64_t bytes){
     if(truncate(fname.c_str(), static_cast<off_t>(bytes)) == -1) 
-        throw quasi_error(errno, "cannot truncate "+fname);
+        throw quasi_error("cannot truncate "+fname);
 }
 static inline void                      create_dir(str dir){
-    if(mkdir(dir.c_str(), 0755)!=0) throw quasi_error(errno, "cannot mkdir "+dir);
+    if(mkdir(dir.c_str(), 0755)!=0) throw quasi_error("cannot mkdir "+dir);
 }
 static inline void                      delete_dir(str dir){
-    if(rmdir(dir)!=0) throw quasi_error(errno, "cannot rmdir "+dir);
+    if(rmdir(dir.c_str())!=0) throw quasi_error("cannot rmdir "+dir);
 }
-static inline bool                       (str fname){
+static inline bool                      file_exists(str fname){
     return access(fname.c_str(), F_OK)==0;
 }
 static inline void                      delete_file(str fname){
-    if(unlink(fname.c_str())!=0) throw quasi_error(errno, "cannot delete file "+fname);
+    if(unlink(fname.c_str())!=0) throw quasi_error("cannot delete file "+fname);
 }
 static inline void                      rename_file(str src, str target){
     if(rename(src.c_str(), target.c_str())!=0) 
-        throw quasi_error(errno, "cannot rename "+src+" to "+target);
+        throw quasi_error("cannot rename "+src+" to "+target);
 }   
 
 // [0] writer is the RAII wrapper of syscall write;
@@ -76,7 +76,7 @@ public:
     {
         if(is_appendable)  fd_ = ::open(fname.c_str(), O_APPEND | O_WRONLY | O_CREAT, 0644);
         else               fd_ = ::open(fname.c_str(),  O_TRUNC | O_WRONLY | O_CREAT, 0644);
-        if(fd_<0) throw quasi_error(errno, "cannot open "+fname);
+        if(fd_<0) throw quasi_error("cannot open "+fname);
     }
     ~writer()
     {
@@ -86,7 +86,7 @@ public:
     }
     void                                sync() // prefer fdatasync 
     {
-        if(::fdatasync(fd_)<0) throw quasi_error(errno, "cannot fdatasync "+fname_);
+        if(::fdatasync(fd_)<0) throw quasi_error("cannot fdatasync "+fname_);
     }
     void                                write_str(const char* what, size_t len);
 private:
@@ -128,7 +128,7 @@ public:
     }
     void                                flush()
     {
-        writer_.write_str(what, len);
+        writer_.write_str(buf_, pos_);
         pos_=0;
     }
 private:
@@ -152,7 +152,7 @@ public:
     reader(str fname) : fname_(fname)
     {
         fd_ = open(fname.c_str(), O_RDONLY);
-        if(fd_<0) throw quasi_error(errno, "cannot open "+fname);
+        if(fd_<0) throw quasi_error("cannot open "+fname);
         posix_fadvise(fd_, 0, 0, POSIX_FADV_SEQUENTIAL); // the syscall, posix_fadvise() is very cheap
     }
     ~reader()
@@ -165,7 +165,7 @@ public:
     void                                skip(uint64_t n)
     {
         if (lseek(fd_, n, SEEK_CUR) == static_cast<off_t>(-1)) 
-            throw quasi_error(errno, "cannot lseek "+fname_);
+            throw quasi_error("cannot lseek "+fname_);
     }
 private:
     int                                 fd_;
@@ -188,7 +188,7 @@ public:
             pos_.fetch_sub(size);
             return false;
         }
-        memcpy(buf+before, data, size);
+        memcpy(buf_+before, data, size);
         return true;
     }
     const char*                         data() const noexcept{
@@ -206,7 +206,7 @@ public:
 private:
     char                                buf_[BUFSIZE];
     std::atomic<uint32_t>               pos_;               
-}
+};
 
 using huge_membuf  =   membuf_template<4194304>;  //4MB
 using large_membuf =   membuf_template<524288>;   //512KB
@@ -253,7 +253,7 @@ public:
     preader(str fname) : fname_(fname)
     {
         fd_ = open(fname.c_str(), O_RDONLY);
-        if(fd_<0) throw quasi_error(errno, "cannot open "+fname);
+        if(fd_<0) throw quasi_error("cannot open "+fname);
         posix_fadvise(fd_, 0, 0, POSIX_FADV_RANDOM);
     }
     ~preader()
@@ -265,7 +265,7 @@ public:
     void                                read_str(char* user_buf, size_t len, uint64_t offset)
     {
         auto r=pread(fd_, user_buf, len, static_cast<off_t>(offset));
-        if(r<0) throw quasi_error(errno, "cannot pread "+fname_);
+        if(r<0) throw quasi_error("cannot pread "+fname_);
     }
 private:
     int                                 fd_;
@@ -290,23 +290,23 @@ public:
     }
     void                                remap(size_t new_len){
         auto p=mremap(mapped_, len_, new_len, MREMAP_MAYMOVE);
-        if(p==MAP_FAILED) throw quasi_error(errno, "cannot mremap "+fname_);
+        if(p==MAP_FAILED) throw quasi_error("cannot mremap "+fname_);
     }
     void                                sync(bool is_blocking=false){
         int flag = is_blocking ? MS_SYNC : MS_ASYNC;
-        if(msync(mapped_, len_, flag)) throw quasi_error(errno, "cannot msync "+fname_) ;
+        if(msync(mapped_, len_, flag)) throw quasi_error("cannot msync "+fname_) ;
     }
     void                                disable_readahead() noexcept{
-        madvise(MADV_RANDOM); 
+        madvise(mapped_, len_, MADV_RANDOM); 
     }
     void                                aggressive_readahead() noexcept{
-        madvise(MADV_SEQUENTIAL); 
+        madvise(mapped_, len_, MADV_SEQUENTIAL); 
     }
     void                                normal_readahead() noexcept{
-        madvise(MADV_NORMAL); // default kernel policy 
+        madvise(mapped_, len_, MADV_NORMAL); // default kernel policy 
     }
     void                                willneed_readahead() noexcept{
-        madvise(MADV_WILLNEED); // not immediately needed, but definitely needed in near future
+        madvise(mapped_, len_, MADV_WILLNEED); // not immediately needed, but definitely needed in near future
     }
 private:
     bool                                is_readonly_;
