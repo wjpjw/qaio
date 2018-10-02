@@ -34,7 +34,7 @@ include rules.ninja
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
+  COMMAND = cd /home/workspace/qaio/build && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -44,13 +44,13 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/workspace/qaio/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build edit_cache: phony CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /home/wjp/projects/qaio/CMakeLists.txt
+# /home/workspace/qaio/CMakeLists.txt
 # =============================================================================
 
 
@@ -58,7 +58,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build core/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build/core && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
+  COMMAND = cd /home/workspace/qaio/build/core && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -80,6 +80,15 @@ build core/CMakeFiles/core.dir/duh.cpp.o: CXX_COMPILER__core ../core/duh.cpp || 
   OBJECT_FILE_DIR = core/CMakeFiles/core.dir
   TARGET_COMPILE_PDB = core/CMakeFiles/core.dir/
   TARGET_PDB = core/libcore.pdb
+build core/CMakeFiles/core.dir/qsock.cpp.o: CXX_COMPILER__core ../core/qsock.cpp || cmake_object_order_depends_target_core
+  DEFINES = -Dcore_EXPORTS
+  DEP_FILE = core/CMakeFiles/core.dir/qsock.cpp.o.d
+  FLAGS = -fPIC -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../core/../util
+  OBJECT_DIR = core/CMakeFiles/core.dir
+  OBJECT_FILE_DIR = core/CMakeFiles/core.dir
+  TARGET_COMPILE_PDB = core/CMakeFiles/core.dir/
+  TARGET_PDB = core/libcore.pdb
 
 # =============================================================================
 # Link build statements for SHARED_LIBRARY target core
@@ -88,10 +97,10 @@ build core/CMakeFiles/core.dir/duh.cpp.o: CXX_COMPILER__core ../core/duh.cpp || 
 #############################################
 # Link the shared library core/libcore.so
 
-build core/libcore.so: CXX_SHARED_LIBRARY_LINKER__core core/CMakeFiles/core.dir/duh.cpp.o | util/libutil.a || util/libutil.a
+build core/libcore.so: CXX_SHARED_LIBRARY_LINKER__core core/CMakeFiles/core.dir/duh.cpp.o core/CMakeFiles/core.dir/qsock.cpp.o | util/libutil.a || util/libutil.a
   LANGUAGE_COMPILE_FLAGS = -fPIC
-  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/wjp/projects/qaio/core/../util util/libutil.a
-  LINK_PATH = -L/usr/local/lib  -L/home/wjp/projects/qaio/core/../util
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/workspace/qaio/core/../util util/libutil.a
+  LINK_PATH = -L/usr/local/lib  -L/home/workspace/qaio/core/../util
   OBJECT_DIR = core/CMakeFiles/core.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -105,13 +114,13 @@ build core/libcore.so: CXX_SHARED_LIBRARY_LINKER__core core/CMakeFiles/core.dir/
 # Utility command for edit_cache
 
 build core/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build/core && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/workspace/qaio/build/core && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build core/edit_cache: phony core/CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /home/wjp/projects/qaio/CMakeLists.txt
+# /home/workspace/qaio/CMakeLists.txt
 # =============================================================================
 
 
@@ -119,7 +128,7 @@ build core/edit_cache: phony core/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build example/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build/example && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
+  COMMAND = cd /home/workspace/qaio/build/example && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -150,8 +159,8 @@ build example/CMakeFiles/example.dir/main.cpp.o: CXX_COMPILER__example ../exampl
 
 build example/example: CXX_EXECUTABLE_LINKER__example example/CMakeFiles/example.dir/main.cpp.o | core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 util/libutil.a || core/libcore.so util/libutil.a
   FLAGS = -fPIC
-  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/wjp/projects/qaio/example/../core:/home/wjp/projects/qaio/build/core:/home/workspace/Libraries/tbb/lib/intel64/gcc4.7 core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 util/libutil.a
-  LINK_PATH = -L/usr/local/lib  -L/home/wjp/projects/qaio/example/../core
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/workspace/qaio/example/../core:/home/workspace/qaio/build/core:/home/workspace/Libraries/tbb/lib/intel64/gcc4.7 core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 util/libutil.a
+  LINK_PATH = -L/usr/local/lib  -L/home/workspace/qaio/example/../core
   OBJECT_DIR = example/CMakeFiles/example.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -163,13 +172,13 @@ build example/example: CXX_EXECUTABLE_LINKER__example example/CMakeFiles/example
 # Utility command for edit_cache
 
 build example/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build/example && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/workspace/qaio/build/example && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build example/edit_cache: phony example/CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /home/wjp/projects/qaio/CMakeLists.txt
+# /home/workspace/qaio/CMakeLists.txt
 # =============================================================================
 
 
@@ -177,7 +186,7 @@ build example/edit_cache: phony example/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build util/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build/util && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
+  COMMAND = cd /home/workspace/qaio/build/util && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -219,7 +228,7 @@ build util/libutil.a: CXX_STATIC_LIBRARY_LINKER__util util/CMakeFiles/util.dir/f
 # Utility command for edit_cache
 
 build util/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/wjp/projects/qaio/build/util && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/workspace/qaio/build/util && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build util/edit_cache: phony util/CMakeFiles/edit_cache.util
@@ -238,19 +247,19 @@ build util: phony util/libutil.a
 # =============================================================================
 
 #############################################
-# Folder: /home/wjp/projects/qaio/build/core
+# Folder: /home/workspace/qaio/build/core
 
 build  core/all: phony core
 # =============================================================================
 
 #############################################
-# Folder: /home/wjp/projects/qaio/build/example
+# Folder: /home/workspace/qaio/build/example
 
 build  example/all: phony example
 # =============================================================================
 
 #############################################
-# Folder: /home/wjp/projects/qaio/build/util
+# Folder: /home/workspace/qaio/build/util
 
 build  util/all: phony util
 # =============================================================================

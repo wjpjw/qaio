@@ -1,4 +1,4 @@
-# Install script for directory: /home/wjp/projects/qaio/util
+# Install script for directory: /home/workspace/qaio/util
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
