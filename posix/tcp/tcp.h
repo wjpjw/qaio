@@ -1,10 +1,16 @@
 namespace wjp{
 
 class tcp_conn{
+public:
+    
+private:
 
 };
  
 class tcp_listener{
+public:
+    
+private:
 
 };
 
@@ -12,8 +18,6 @@ class tcp_listener{
 
 class tcp_connector{
 public:
-    void                                bind(str peer);
-    void                                unbind(str peer);
     
 private:
 
