@@ -1,6 +1,7 @@
 #pragma once
 #include <errno.h>          // errno
 #include <sys/types.h>      // off_t, rlim_t
+#include <sys/stat.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>         // strerror
@@ -23,7 +24,7 @@ namespace wjp
 {
 using str=const std::string&; // abbr.
 
-static inline std::string               qerror_str(str what, uint16_t level)
+static inline std::string qerror_str(str what, uint16_t level)
 {
     static std::string errlevels[3]={"whoops | ", "panic | ", "crash | "};
     return errlevels[level] + what + std::string(" | strerror: ")+strerror(errno);

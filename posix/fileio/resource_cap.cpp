@@ -8,7 +8,7 @@ void resource_cap::reset(uint64_t n){
     nr_.store(n);
 }
 
-void resource_cap::release(uint64_t n=1){
+void resource_cap::release(uint64_t n){
     nr_.fetch_add(n);
 }
 

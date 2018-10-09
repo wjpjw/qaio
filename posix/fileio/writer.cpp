@@ -1,9 +1,10 @@
-#include "reader.h"
+#include "writer.h"
 #include <unistd.h>
+#include <fcntl.h>
 
 namespace wjp{
 
-writer::writer(str fname, bool is_appendable=true) : fname_(fname) 
+writer::writer(str fname, bool is_appendable) : fname_(fname) 
 {
     fd_ = open(fname.c_str(), (is_appendable ? O_APPEND : O_TRUNC) | O_WRONLY | O_CREAT, 0644);
     if(unlikely(fd_<0)) throw qerror("cannot open "+fname);

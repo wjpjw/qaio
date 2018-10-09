@@ -34,7 +34,7 @@ include rules.ninja
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
+  COMMAND = cd /home/wjp/projects/qaio/build && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -44,13 +44,13 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/wjp/projects/qaio/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build edit_cache: phony CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /home/workspace/qaio/CMakeLists.txt
+# /home/wjp/projects/qaio/CMakeLists.txt
 # =============================================================================
 
 
@@ -58,7 +58,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build core/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build/core && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
+  COMMAND = cd /home/wjp/projects/qaio/build/core && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -70,21 +70,21 @@ build core/rebuild_cache: phony core/CMakeFiles/rebuild_cache.util
 #############################################
 # Order-only phony target for core
 
-build cmake_object_order_depends_target_core: phony || cmake_object_order_depends_target_util
-build core/CMakeFiles/core.dir/duh.cpp.o: CXX_COMPILER__core ../core/duh.cpp || cmake_object_order_depends_target_core
+build cmake_object_order_depends_target_core: phony || cmake_object_order_depends_target_fileio cmake_object_order_depends_target_posix cmake_object_order_depends_target_tcp
+build core/CMakeFiles/core.dir/logger.cpp.o: CXX_COMPILER__core ../core/logger.cpp || cmake_object_order_depends_target_core
   DEFINES = -Dcore_EXPORTS
-  DEP_FILE = core/CMakeFiles/core.dir/duh.cpp.o.d
+  DEP_FILE = core/CMakeFiles/core.dir/logger.cpp.o.d
   FLAGS = -fPIC -fPIC   -std=gnu++14
-  INCLUDES = -I/usr/local/include -I.././include -I../core/../util
+  INCLUDES = -I/usr/local/include -I.././include -I../core/../posix
   OBJECT_DIR = core/CMakeFiles/core.dir
   OBJECT_FILE_DIR = core/CMakeFiles/core.dir
   TARGET_COMPILE_PDB = core/CMakeFiles/core.dir/
   TARGET_PDB = core/libcore.pdb
-build core/CMakeFiles/core.dir/qsock.cpp.o: CXX_COMPILER__core ../core/qsock.cpp || cmake_object_order_depends_target_core
+build core/CMakeFiles/core.dir/poller.cpp.o: CXX_COMPILER__core ../core/poller.cpp || cmake_object_order_depends_target_core
   DEFINES = -Dcore_EXPORTS
-  DEP_FILE = core/CMakeFiles/core.dir/qsock.cpp.o.d
+  DEP_FILE = core/CMakeFiles/core.dir/poller.cpp.o.d
   FLAGS = -fPIC -fPIC   -std=gnu++14
-  INCLUDES = -I/usr/local/include -I.././include -I../core/../util
+  INCLUDES = -I/usr/local/include -I.././include -I../core/../posix
   OBJECT_DIR = core/CMakeFiles/core.dir
   OBJECT_FILE_DIR = core/CMakeFiles/core.dir
   TARGET_COMPILE_PDB = core/CMakeFiles/core.dir/
@@ -97,10 +97,10 @@ build core/CMakeFiles/core.dir/qsock.cpp.o: CXX_COMPILER__core ../core/qsock.cpp
 #############################################
 # Link the shared library core/libcore.so
 
-build core/libcore.so: CXX_SHARED_LIBRARY_LINKER__core core/CMakeFiles/core.dir/duh.cpp.o core/CMakeFiles/core.dir/qsock.cpp.o | util/libutil.a || util/libutil.a
+build core/libcore.so: CXX_SHARED_LIBRARY_LINKER__core core/CMakeFiles/core.dir/logger.cpp.o core/CMakeFiles/core.dir/poller.cpp.o | posix/libposix.a posix/fileio/libfileio.a posix/tcp/libtcp.a || posix/fileio/libfileio.a posix/libposix.a posix/tcp/libtcp.a
   LANGUAGE_COMPILE_FLAGS = -fPIC
-  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/workspace/qaio/core/../util util/libutil.a
-  LINK_PATH = -L/usr/local/lib  -L/home/workspace/qaio/core/../util
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/wjp/projects/qaio/core/../posix posix/libposix.a posix/fileio/libfileio.a posix/tcp/libtcp.a
+  LINK_PATH = -L/usr/local/lib  -L/home/wjp/projects/qaio/core/../posix
   OBJECT_DIR = core/CMakeFiles/core.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -114,13 +114,13 @@ build core/libcore.so: CXX_SHARED_LIBRARY_LINKER__core core/CMakeFiles/core.dir/
 # Utility command for edit_cache
 
 build core/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build/core && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/wjp/projects/qaio/build/core && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build core/edit_cache: phony core/CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /home/workspace/qaio/CMakeLists.txt
+# /home/wjp/projects/qaio/CMakeLists.txt
 # =============================================================================
 
 
@@ -128,7 +128,7 @@ build core/edit_cache: phony core/CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build example/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build/example && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
+  COMMAND = cd /home/wjp/projects/qaio/build/example && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -140,7 +140,7 @@ build example/rebuild_cache: phony example/CMakeFiles/rebuild_cache.util
 #############################################
 # Order-only phony target for example
 
-build cmake_object_order_depends_target_example: phony || cmake_object_order_depends_target_core cmake_object_order_depends_target_util
+build cmake_object_order_depends_target_example: phony || cmake_object_order_depends_target_core cmake_object_order_depends_target_fileio cmake_object_order_depends_target_posix cmake_object_order_depends_target_tcp
 build example/CMakeFiles/example.dir/main.cpp.o: CXX_COMPILER__example ../example/main.cpp || cmake_object_order_depends_target_example
   DEP_FILE = example/CMakeFiles/example.dir/main.cpp.o.d
   FLAGS = -fPIC   -std=gnu++14
@@ -157,10 +157,10 @@ build example/CMakeFiles/example.dir/main.cpp.o: CXX_COMPILER__example ../exampl
 #############################################
 # Link the executable example/example
 
-build example/example: CXX_EXECUTABLE_LINKER__example example/CMakeFiles/example.dir/main.cpp.o | core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 util/libutil.a || core/libcore.so util/libutil.a
+build example/example: CXX_EXECUTABLE_LINKER__example example/CMakeFiles/example.dir/main.cpp.o | core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 posix/libposix.a posix/fileio/libfileio.a posix/tcp/libtcp.a || core/libcore.so posix/fileio/libfileio.a posix/libposix.a posix/tcp/libtcp.a
   FLAGS = -fPIC
-  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/workspace/qaio/example/../core:/home/workspace/qaio/build/core:/home/workspace/Libraries/tbb/lib/intel64/gcc4.7 core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 util/libutil.a
-  LINK_PATH = -L/usr/local/lib  -L/home/workspace/qaio/example/../core
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib:/home/wjp/projects/qaio/example/../core:/home/wjp/projects/qaio/build/core:/home/workspace/Libraries/tbb/lib/intel64/gcc4.7 core/libcore.so /home/workspace/Libraries/tbb/lib/intel64/gcc4.7/libtbb.so.2 posix/libposix.a posix/fileio/libfileio.a posix/tcp/libtcp.a
+  LINK_PATH = -L/usr/local/lib  -L/home/wjp/projects/qaio/example/../core
   OBJECT_DIR = example/CMakeFiles/example.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -172,74 +172,222 @@ build example/example: CXX_EXECUTABLE_LINKER__example example/CMakeFiles/example
 # Utility command for edit_cache
 
 build example/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build/example && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/wjp/projects/qaio/build/example && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 build example/edit_cache: phony example/CMakeFiles/edit_cache.util
 # =============================================================================
 # Write statements declared in CMakeLists.txt:
-# /home/workspace/qaio/CMakeLists.txt
+# /home/wjp/projects/qaio/CMakeLists.txt
 # =============================================================================
 
 
 #############################################
 # Utility command for rebuild_cache
 
-build util/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build/util && /usr/bin/cmake -H/home/workspace/qaio -B/home/workspace/qaio/build
+build posix/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/wjp/projects/qaio/build/posix && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
-build util/rebuild_cache: phony util/CMakeFiles/rebuild_cache.util
+build posix/rebuild_cache: phony posix/CMakeFiles/rebuild_cache.util
 # =============================================================================
-# Object build statements for STATIC_LIBRARY target util
+# Object build statements for STATIC_LIBRARY target posix
 
 
 #############################################
-# Order-only phony target for util
+# Order-only phony target for posix
 
-build cmake_object_order_depends_target_util: phony
-build util/CMakeFiles/util.dir/fileio.cpp.o: CXX_COMPILER__util ../util/fileio.cpp || cmake_object_order_depends_target_util
-  DEP_FILE = util/CMakeFiles/util.dir/fileio.cpp.o.d
-  FLAGS = -fPIC   -std=gnu++14
-  INCLUDES = -I/usr/local/include -I.././include
-  OBJECT_DIR = util/CMakeFiles/util.dir
-  OBJECT_FILE_DIR = util/CMakeFiles/util.dir
-  TARGET_COMPILE_PDB = util/CMakeFiles/util.dir/util.pdb
-  TARGET_PDB = util/libutil.pdb
+build cmake_object_order_depends_target_posix: phony || cmake_object_order_depends_target_fileio cmake_object_order_depends_target_tcp
 
 # =============================================================================
-# Link build statements for STATIC_LIBRARY target util
+# Link build statements for STATIC_LIBRARY target posix
 
 
 #############################################
-# Link the static library util/libutil.a
+# Link the static library posix/libposix.a
 
-build util/libutil.a: CXX_STATIC_LIBRARY_LINKER__util util/CMakeFiles/util.dir/fileio.cpp.o
+build posix/libposix.a: CXX_STATIC_LIBRARY_LINKER__posix || posix/fileio/libfileio.a posix/tcp/libtcp.a
   LANGUAGE_COMPILE_FLAGS = -fPIC
-  OBJECT_DIR = util/CMakeFiles/util.dir
+  OBJECT_DIR = posix/CMakeFiles/posix.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = util/CMakeFiles/util.dir/util.pdb
-  TARGET_FILE = util/libutil.a
-  TARGET_PDB = util/libutil.pdb
+  TARGET_COMPILE_PDB = posix/CMakeFiles/posix.dir/posix.pdb
+  TARGET_FILE = posix/libposix.a
+  TARGET_PDB = posix/libposix.pdb
 
 #############################################
 # Utility command for edit_cache
 
-build util/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/workspace/qaio/build/util && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+build posix/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/wjp/projects/qaio/build/posix && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
-build util/edit_cache: phony util/CMakeFiles/edit_cache.util
+build posix/edit_cache: phony posix/CMakeFiles/edit_cache.util
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/wjp/projects/qaio/posix/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build posix/fileio/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/wjp/projects/qaio/build/posix/fileio && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+build posix/fileio/rebuild_cache: phony posix/fileio/CMakeFiles/rebuild_cache.util
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target fileio
+
+
+#############################################
+# Order-only phony target for fileio
+
+build cmake_object_order_depends_target_fileio: phony
+build posix/fileio/CMakeFiles/fileio.dir/fileutils.cpp.o: CXX_COMPILER__fileio ../posix/fileio/fileutils.cpp || cmake_object_order_depends_target_fileio
+  DEP_FILE = posix/fileio/CMakeFiles/fileio.dir/fileutils.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  OBJECT_FILE_DIR = posix/fileio/CMakeFiles/fileio.dir
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_PDB = posix/fileio/libfileio.pdb
+build posix/fileio/CMakeFiles/fileio.dir/mmap_handle.cpp.o: CXX_COMPILER__fileio ../posix/fileio/mmap_handle.cpp || cmake_object_order_depends_target_fileio
+  DEP_FILE = posix/fileio/CMakeFiles/fileio.dir/mmap_handle.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  OBJECT_FILE_DIR = posix/fileio/CMakeFiles/fileio.dir
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_PDB = posix/fileio/libfileio.pdb
+build posix/fileio/CMakeFiles/fileio.dir/preader.cpp.o: CXX_COMPILER__fileio ../posix/fileio/preader.cpp || cmake_object_order_depends_target_fileio
+  DEP_FILE = posix/fileio/CMakeFiles/fileio.dir/preader.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  OBJECT_FILE_DIR = posix/fileio/CMakeFiles/fileio.dir
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_PDB = posix/fileio/libfileio.pdb
+build posix/fileio/CMakeFiles/fileio.dir/reader.cpp.o: CXX_COMPILER__fileio ../posix/fileio/reader.cpp || cmake_object_order_depends_target_fileio
+  DEP_FILE = posix/fileio/CMakeFiles/fileio.dir/reader.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  OBJECT_FILE_DIR = posix/fileio/CMakeFiles/fileio.dir
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_PDB = posix/fileio/libfileio.pdb
+build posix/fileio/CMakeFiles/fileio.dir/resource_cap.cpp.o: CXX_COMPILER__fileio ../posix/fileio/resource_cap.cpp || cmake_object_order_depends_target_fileio
+  DEP_FILE = posix/fileio/CMakeFiles/fileio.dir/resource_cap.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  OBJECT_FILE_DIR = posix/fileio/CMakeFiles/fileio.dir
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_PDB = posix/fileio/libfileio.pdb
+build posix/fileio/CMakeFiles/fileio.dir/writer.cpp.o: CXX_COMPILER__fileio ../posix/fileio/writer.cpp || cmake_object_order_depends_target_fileio
+  DEP_FILE = posix/fileio/CMakeFiles/fileio.dir/writer.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  OBJECT_FILE_DIR = posix/fileio/CMakeFiles/fileio.dir
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_PDB = posix/fileio/libfileio.pdb
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target fileio
+
+
+#############################################
+# Link the static library posix/fileio/libfileio.a
+
+build posix/fileio/libfileio.a: CXX_STATIC_LIBRARY_LINKER__fileio posix/fileio/CMakeFiles/fileio.dir/fileutils.cpp.o posix/fileio/CMakeFiles/fileio.dir/mmap_handle.cpp.o posix/fileio/CMakeFiles/fileio.dir/preader.cpp.o posix/fileio/CMakeFiles/fileio.dir/reader.cpp.o posix/fileio/CMakeFiles/fileio.dir/resource_cap.cpp.o posix/fileio/CMakeFiles/fileio.dir/writer.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -fPIC
+  OBJECT_DIR = posix/fileio/CMakeFiles/fileio.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_COMPILE_PDB = posix/fileio/CMakeFiles/fileio.dir/fileio.pdb
+  TARGET_FILE = posix/fileio/libfileio.a
+  TARGET_PDB = posix/fileio/libfileio.pdb
+
+#############################################
+# Utility command for edit_cache
+
+build posix/fileio/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/wjp/projects/qaio/build/posix/fileio && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build posix/fileio/edit_cache: phony posix/fileio/CMakeFiles/edit_cache.util
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/wjp/projects/qaio/posix/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build posix/tcp/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/wjp/projects/qaio/build/posix/tcp && /usr/bin/cmake -H/home/wjp/projects/qaio -B/home/wjp/projects/qaio/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+build posix/tcp/rebuild_cache: phony posix/tcp/CMakeFiles/rebuild_cache.util
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target tcp
+
+
+#############################################
+# Order-only phony target for tcp
+
+build cmake_object_order_depends_target_tcp: phony
+build posix/tcp/CMakeFiles/tcp.dir/tcp.cpp.o: CXX_COMPILER__tcp ../posix/tcp/tcp.cpp || cmake_object_order_depends_target_tcp
+  DEP_FILE = posix/tcp/CMakeFiles/tcp.dir/tcp.cpp.o.d
+  FLAGS = -fPIC   -std=gnu++14
+  INCLUDES = -I/usr/local/include -I.././include -I../posix/./fileio -I../posix/./tcp
+  OBJECT_DIR = posix/tcp/CMakeFiles/tcp.dir
+  OBJECT_FILE_DIR = posix/tcp/CMakeFiles/tcp.dir
+  TARGET_COMPILE_PDB = posix/tcp/CMakeFiles/tcp.dir/tcp.pdb
+  TARGET_PDB = posix/tcp/libtcp.pdb
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target tcp
+
+
+#############################################
+# Link the static library posix/tcp/libtcp.a
+
+build posix/tcp/libtcp.a: CXX_STATIC_LIBRARY_LINKER__tcp posix/tcp/CMakeFiles/tcp.dir/tcp.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -fPIC
+  OBJECT_DIR = posix/tcp/CMakeFiles/tcp.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_COMPILE_PDB = posix/tcp/CMakeFiles/tcp.dir/tcp.pdb
+  TARGET_FILE = posix/tcp/libtcp.a
+  TARGET_PDB = posix/tcp/libtcp.pdb
+
+#############################################
+# Utility command for edit_cache
+
+build posix/tcp/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/wjp/projects/qaio/build/posix/tcp && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+build posix/tcp/edit_cache: phony posix/tcp/CMakeFiles/edit_cache.util
 # =============================================================================
 # Target aliases.
 
 build core: phony core/libcore.so
 build example: phony example/example
+build fileio: phony posix/fileio/libfileio.a
 build libcore.so: phony core/libcore.so
-build libutil.a: phony util/libutil.a
-build util: phony util/libutil.a
+build libfileio.a: phony posix/fileio/libfileio.a
+build libposix.a: phony posix/libposix.a
+build libtcp.a: phony posix/tcp/libtcp.a
+build posix: phony posix/libposix.a
+build tcp: phony posix/tcp/libtcp.a
 # =============================================================================
 # Folder targets.
 
@@ -247,21 +395,33 @@ build util: phony util/libutil.a
 # =============================================================================
 
 #############################################
-# Folder: /home/workspace/qaio/build/core
+# Folder: /home/wjp/projects/qaio/build/core
 
 build  core/all: phony core
 # =============================================================================
 
 #############################################
-# Folder: /home/workspace/qaio/build/example
+# Folder: /home/wjp/projects/qaio/build/example
 
 build  example/all: phony example
 # =============================================================================
 
 #############################################
-# Folder: /home/workspace/qaio/build/util
+# Folder: /home/wjp/projects/qaio/build/posix
 
-build  util/all: phony util
+build  posix/all: phony posix posix/fileio/all posix/tcp/all
+# =============================================================================
+
+#############################################
+# Folder: /home/wjp/projects/qaio/build/posix/fileio
+
+build  posix/fileio/all: phony fileio
+# =============================================================================
+
+#############################################
+# Folder: /home/wjp/projects/qaio/build/posix/tcp
+
+build  posix/tcp/all: phony tcp
 # =============================================================================
 # Built-in targets
 
@@ -269,7 +429,7 @@ build  util/all: phony util
 #############################################
 # The main all target.
 
-build all: phony core/libcore.so example/example util/libutil.a
+build all: phony core/libcore.so example/example posix/libposix.a posix/fileio/libfileio.a posix/tcp/libtcp.a
 
 #############################################
 # Make the all target the default.
@@ -279,13 +439,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../core/CMakeLists.txt ../example/CMakeLists.txt ../util/CMakeLists.txt /home/workspace/Libraries/tbb/cmake/TBBConfig.cmake /home/workspace/Libraries/tbb/cmake/TBBConfigVersion.cmake /usr/share/cmake-3.10/Modules/CMakeCCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeCompilerIdDetection.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompileFeatures.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerABI.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerId.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake /usr/share/cmake-3.10/Modules/CMakeFindBinUtils.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeNinjaFindMake.cmake /usr/share/cmake-3.10/Modules/CMakeParseImplicitLinkInfo.cmake /usr/share/cmake-3.10/Modules/CMakeSystem.cmake.in /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/CMakeTestCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCompilerCommon.cmake /usr/share/cmake-3.10/Modules/Compiler/ADSP-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/ARMCC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/AppleClang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Borland-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Cray-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GHS-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-FindBinUtils.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IAR-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Intel-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MIPSpro-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MSVC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PGI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PathScale-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SCO-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Watcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Internal/FeatureTesting.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Determine-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/feature_tests.c CMakeFiles/feature_tests.cxx
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../core/CMakeLists.txt ../example/CMakeLists.txt ../posix/CMakeLists.txt ../posix/fileio/CMakeLists.txt ../posix/tcp/CMakeLists.txt /home/workspace/Libraries/tbb/cmake/TBBConfig.cmake /home/workspace/Libraries/tbb/cmake/TBBConfigVersion.cmake /usr/share/cmake-3.10/Modules/CMakeCCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeCompilerIdDetection.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompileFeatures.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerABI.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerId.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake /usr/share/cmake-3.10/Modules/CMakeFindBinUtils.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeNinjaFindMake.cmake /usr/share/cmake-3.10/Modules/CMakeParseImplicitLinkInfo.cmake /usr/share/cmake-3.10/Modules/CMakeSystem.cmake.in /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/CMakeTestCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCompilerCommon.cmake /usr/share/cmake-3.10/Modules/Compiler/ADSP-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/ARMCC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/AppleClang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Borland-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Cray-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GHS-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-FindBinUtils.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IAR-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Intel-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MIPSpro-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MSVC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PGI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PathScale-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SCO-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Watcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Internal/FeatureTesting.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Determine-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/feature_tests.c CMakeFiles/feature_tests.cxx
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt ../core/CMakeLists.txt ../example/CMakeLists.txt ../util/CMakeLists.txt /home/workspace/Libraries/tbb/cmake/TBBConfig.cmake /home/workspace/Libraries/tbb/cmake/TBBConfigVersion.cmake /usr/share/cmake-3.10/Modules/CMakeCCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeCompilerIdDetection.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompileFeatures.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerABI.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerId.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake /usr/share/cmake-3.10/Modules/CMakeFindBinUtils.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeNinjaFindMake.cmake /usr/share/cmake-3.10/Modules/CMakeParseImplicitLinkInfo.cmake /usr/share/cmake-3.10/Modules/CMakeSystem.cmake.in /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/CMakeTestCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCompilerCommon.cmake /usr/share/cmake-3.10/Modules/Compiler/ADSP-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/ARMCC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/AppleClang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Borland-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Cray-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GHS-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-FindBinUtils.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IAR-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Intel-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MIPSpro-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MSVC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PGI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PathScale-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SCO-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Watcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Internal/FeatureTesting.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Determine-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/feature_tests.c CMakeFiles/feature_tests.cxx: phony
+build ../CMakeLists.txt ../core/CMakeLists.txt ../example/CMakeLists.txt ../posix/CMakeLists.txt ../posix/fileio/CMakeLists.txt ../posix/tcp/CMakeLists.txt /home/workspace/Libraries/tbb/cmake/TBBConfig.cmake /home/workspace/Libraries/tbb/cmake/TBBConfigVersion.cmake /usr/share/cmake-3.10/Modules/CMakeCCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c /usr/share/cmake-3.10/Modules/CMakeCInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCXXCompiler.cmake.in /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeCompilerIdDetection.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompileFeatures.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerABI.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineCompilerId.cmake /usr/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake /usr/share/cmake-3.10/Modules/CMakeFindBinUtils.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeNinjaFindMake.cmake /usr/share/cmake-3.10/Modules/CMakeParseImplicitLinkInfo.cmake /usr/share/cmake-3.10/Modules/CMakeSystem.cmake.in /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/CMakeTestCCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCXXCompiler.cmake /usr/share/cmake-3.10/Modules/CMakeTestCompilerCommon.cmake /usr/share/cmake-3.10/Modules/Compiler/ADSP-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/ARMCC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/AppleClang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Borland-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Cray-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GHS-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX-FeatureTests.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-FindBinUtils.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IAR-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /usr/share/cmake-3.10/Modules/Compiler/Intel-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MIPSpro-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/MSVC-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PGI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/PathScale-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SCO-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TI-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/Watcom-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-C-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /usr/share/cmake-3.10/Modules/Internal/FeatureTesting.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Determine-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCCompiler.cmake CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake CMakeFiles/feature_tests.c CMakeFiles/feature_tests.cxx: phony
 
 #############################################
 # Clean all the built files.

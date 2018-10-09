@@ -1,4 +1,4 @@
-# Install script for directory: /home/wjp/projects/qaio/core
+# Install script for directory: /home/wjp/projects/qaio/posix/fileio
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

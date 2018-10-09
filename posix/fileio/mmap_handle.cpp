@@ -2,6 +2,7 @@
 #include "fileutils.h"
 #include <unistd.h>         // read, open, write, close, lseek, pread
 #include <sys/mman.h>       // mmap
+#include <fcntl.h>
 
 namespace wjp{
 mmap_handle::mmap_handle(const std::string& fname, resource_cap* cap, bool is_readonly) : fname_(fname), cap_(cap), is_readonly_(is_readonly)
@@ -42,7 +43,7 @@ void mmap_handle::remap(size_t new_len){
     if(p==MAP_FAILED) throw qerror("cannot mremap "+fname_);
 }
 
-void mmap_handle::sync(bool is_blocking=false){
+void mmap_handle::sync(bool is_blocking){
     int flag = is_blocking ? MS_SYNC : MS_ASYNC;
     if(msync(mapped_, len_, flag)) throw qerror("cannot msync "+fname_) ;
 }

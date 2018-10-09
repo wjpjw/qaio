@@ -1,4 +1,4 @@
-# Install script for directory: /home/wjp/projects/qaio/core
+# Install script for directory: /home/wjp/projects/qaio/posix
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,12 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for each subdirectory.
+  include("/home/wjp/projects/qaio/build/posix/fileio/cmake_install.cmake")
+  include("/home/wjp/projects/qaio/build/posix/tcp/cmake_install.cmake")
+
 endif()
 

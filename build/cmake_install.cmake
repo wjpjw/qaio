@@ -1,4 +1,4 @@
-# Install script for directory: /home/workspace/qaio
+# Install script for directory: /home/wjp/projects/qaio
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,9 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/workspace/qaio/build/core/cmake_install.cmake")
-  include("/home/workspace/qaio/build/example/cmake_install.cmake")
-  include("/home/workspace/qaio/build/util/cmake_install.cmake")
+  include("/home/wjp/projects/qaio/build/core/cmake_install.cmake")
+  include("/home/wjp/projects/qaio/build/example/cmake_install.cmake")
+  include("/home/wjp/projects/qaio/build/posix/cmake_install.cmake")
 
 endif()
 
@@ -53,5 +53,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/workspace/qaio/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/wjp/projects/qaio/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

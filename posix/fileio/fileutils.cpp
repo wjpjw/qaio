@@ -11,7 +11,7 @@ int fd_limit()
 {
     struct rlimit rlim;
     if(getrlimit(RLIMIT_NOFILE, &rlim)){
-        throw quasi_error("cannot getrlimit");
+        throw qerror("cannot getrlimit");
     }else if(rlim.rlim_cur==RLIM_INFINITY){
         return std::numeric_limits<int>::max();
     }
@@ -24,7 +24,7 @@ void dir_children(const std::string& dir, std::vector<std::string>& children)
 {
     children.clear();
     DIR* d=opendir(dir.c_str());
-    if(d==nullptr) throw quasi_error("cannot opendir");
+    if(d==nullptr) throw qerror("cannot opendir");
     struct dirent* entry;
     while((entry=readdir(d))!=nullptr){
         children.emplace_back(entry->d_name);
@@ -36,7 +36,7 @@ uint64_t file_size(const std::string& fname)
 {
     struct stat sbuf;
     if (stat(fname.c_str(), &sbuf) != 0) {
-        throw quasi_error("cannot stat "+fname);
+        throw qerror("cannot stat "+fname);
     } else {
         return sbuf.st_size;
     }
@@ -46,7 +46,7 @@ bool is_regular_file(str fname)
 {
     struct stat sbuf;
     if (stat(fname.c_str(), &sbuf) != 0) {
-        throw quasi_error("cannot stat "+fname);
+        throw qerror("cannot stat "+fname);
     } else {
         return S_ISREG(sbuf.st_mode);
     }
