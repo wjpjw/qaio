@@ -1,2 +1,2 @@
 aux_source_directory(. DIRSRCS)
-add_library(tcp ${DIRSRCS})
+add_library(network ${DIRSRCS})
