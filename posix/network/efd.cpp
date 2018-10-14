@@ -1,13 +1,14 @@
-#include "eventfd.h"
+#include "efd.h"
 #include <sys/eventfd.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 namespace wjp{
 
 int efd_open()
 {
     int fd;
-    if(fd=event_fd(0, EFD_CLOEXEC)<0){
+    if(fd=eventfd(0, EFD_CLOEXEC)<0){
         throw qerror("cannot create eventfd");
     }
     fcntl(fd, F_SETFD, FD_CLOEXEC);
@@ -17,7 +18,7 @@ int efd_open()
 void efd_send(int efd)
 {
     uint64_t one=1;
-    write(wfd,&one,sizeof(one));
+    write(efd,&one,sizeof(one));
 }
 
 void efd_recv(int efd)

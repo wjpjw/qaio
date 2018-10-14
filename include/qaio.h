@@ -2,6 +2,7 @@
 #include <errno.h>          // errno
 #include <sys/types.h>      // off_t, rlim_t
 #include <sys/stat.h>
+#include <sys/socket.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>         // strerror
