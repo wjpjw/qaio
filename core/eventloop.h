@@ -1,14 +1,10 @@
 #pragma once
 
 #include "qaio.h"
-#include <mutex>
 #include <functional>
-#include <condition_variable>
-#include <thread>
 #include "posix/network/epoller.h"
 #include "posix/network/efd.h"
-#include "thr.h"
-#include "convar.h"
+#include "thread.h"
 
 namespace wjp{
 
@@ -62,14 +58,14 @@ public:
     //@todo: use lockfree or fine-grained concurrent list
     void                    add_to_be_removed(io_event* io_event_)
     {
-        std::lock_guard<std::mutex> lk(mtx_);
+        lock_guard lk(mtx_);
         to_be_removed_.push_back(io_event_);
     }
 private:
     thr                     thread_;
     epoller                 epoller_; //thread-safe
     bool                    shutdown_;
-    std::mutex              mtx_;
+    mutex                   mtx_;
     int                     timer_fd_;
     int                     event_fd_;
     std::vector<io_event*>  to_be_removed_; //pending io_events  
@@ -99,7 +95,7 @@ public:
 
     void                    term()
     {
-        std::lock_guard<std::mutex> lk(mtx_);
+        lock_guard lk(mtx_);
         if(!closing_){
             closing_=true;
             shutdown(fd_, SHUT_RDWR); 
@@ -108,14 +104,14 @@ public:
     }
     void                    rearm(int events)
     {
-        std::lock_guard<std::mutex> lk(mtx_);
+        lock_guard lk(mtx_);
         if(!closing_){
             eventloop::foo().rearm_event(fd_, events_mask_, events, this);
         }
     }
 
 private:    
-    std::mutex              mtx_;
+    mutex                   mtx_;
     int                     fd_;
     std::function<void()>   cb_;
     bool                    closed_;
