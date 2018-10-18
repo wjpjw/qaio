@@ -38,22 +38,22 @@ EPOLLET
 EPOLLONESHOT (since Linux 2.6.2)
     Sets the one-shot behavior for the associated file descriptor. This means that after an event is pulled out with epoll_wait(2) the associated file descriptor is internally disabled and no other events will be reported by the epoll interface. The user must call epoll_ctl() with EPOLL_CTL_MOD to rearm the file descriptor with a new event mask.
 
+wjp::epoller uses:
+1. default level-triggered mode: it makes epoll simply a faster poll
+2. EPOLLONESHOT: Since even with edge-triggered epoll, multiple events can be generated upon receipt of multiple chunks of data, the caller has the option to specify the EPOLLONESHOT flag, to tell epoll to disable theassociated file descriptor after the receipt of an event with epoll_wait(2).  When the EPOLLONESHOT flag is specified, it is the caller's responsibility to rearm the file descriptor using epoll_ctl(2) with EPOLL_CTL_MOD. Since we use a set of threads to handle epoll events, one-shot mode is desirable.
+3. EPOLLERR: enables error detection 
 
-wjp::epoller使用了下列设置：
- 1. 默认的level-triggered模式
- 2. ONESHOT模式
- 3. 开启EPOLLERR错误事件
- 
- ONESHOT与ET的区别：
- ET在缓冲区溢出时就会产生通知，如果缓冲区足够大，它的确可以保证同一种事件仅通知一次，可读可写错误三类事件独立。这看起来很美好，但如果缓冲区不够大就会导致同一事件通知多次。在线程池工作队列的设计中，这就导致一个socket可能被多个线程own。
+Edge-triggered mode: edge-triggered mode delivers events only when changes occur on the monitored file descriptor. 
 
- ONESHOT让对某fd的监听行为变成一次性的，一个事件永远只有一次通知，而且通知完了还得rearm这个fd，保证一个socket总是被一个线程own。
+ET epoll generate more than one event for the same receipt of data, if a buffer overflow happens.
 
-不用epoll的ET模式主要还是因为它的行为会依赖于不同的socket，有不确定性，详见这个答案：
+ET mode still seems broken. See:
     https://stackoverflow.com/questions/12892286/epoll-with-edge-triggered-event/12897334
 
-对timerfd, eventfd会通知得比预期的少；datagram sockets则通知得比预期的多；
-略坑而且完全没有注释，所以实际工程里没理由用它。
+```
+... the exact behaviour of edge-triggered mode actually depends on the socket type used and isn't really documented anywhere. for datagram sockets you might get more events than you would expect.
+... and for eventfds and timerfds you get fewer than you'd expect.
+```
 
 */
 

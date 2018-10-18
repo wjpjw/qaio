@@ -8,7 +8,7 @@ namespace wjp{
 
 epoller::epoller(){
     epoll_fd_=epoll_create1(EPOLL_CLOEXEC);
-    if(epoll_fd_<0) throw qerror("Fail to epoll_create1()");
+    qerror_if(epoll_fd_<0, "Fail to epoll_create1()");
 }
 
 epoller::~epoller()
@@ -22,9 +22,7 @@ void                    epoller::add(int fd){
     struct epoll_event ee;
     ee.events=0;
     ee.data.ptr=this;
-    if ((epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, fd, &ee)) != 0) {
-        throw qerror("Fail to add epoll event");
-    }
+    qerror_if ((epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, fd, &ee)) != 0, "Fail to add epoll event");
 }
 
 void                    epoller::mod(int fd, int events_new, void* ev_data)
@@ -32,9 +30,7 @@ void                    epoller::mod(int fd, int events_new, void* ev_data)
     struct epoll_event ee;
     ee.events   = events_new | EPOLLONESHOT | EPOLLERR;
     ee.data.ptr = ev_data; 
-    if (epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, fd, &ee) != 0) {
-        throw qerror("Fail to mod epoll event");
-    }
+    qerror_if(epoll_ctl(epoll_fd_, EPOLL_CTL_MOD, fd, &ee) != 0, "Fail to mod epoll event"); 
 }
 
 void                    epoller::mod(int fd, int events_old, int events_append, void* ev_data)
@@ -44,9 +40,7 @@ void                    epoller::mod(int fd, int events_old, int events_append, 
 
 void                    epoller::del(int fd){
     struct epoll_event ee; //unused
-    if(epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, &ee)!=0){
-        throw qerror("Fail to del epoll event");
-    }
+    qerror_if(epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, &ee)!=0, "Fail to del epoll event");
 }
 
 

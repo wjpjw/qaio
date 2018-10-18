@@ -8,9 +8,7 @@ namespace wjp{
 int efd_open()
 {
     int fd;
-    if(fd=eventfd(0, EFD_CLOEXEC)<0){
-        throw qerror("cannot create eventfd");
-    }
+    qerror_if(fd=eventfd(0, EFD_CLOEXEC)<0, "cannot create eventfd");
     fcntl(fd, F_SETFD, FD_CLOEXEC);
     fcntl(fd, F_SETFL, O_NONBLOCK);
 }

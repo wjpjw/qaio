@@ -44,6 +44,12 @@ public:
     error_level error_level_;    
 };
 
+//If is_error is very unlikely(less than say 5% chance) to be true, this function could potentially enhance branch prediction.
+static inline qerror_if(bool is_error, const std::string& err_msg){
+    if(unlikely(is_error)){
+        throw qerror(err_msg);
+    }
+}
 
 
 }
