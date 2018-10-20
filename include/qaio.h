@@ -12,7 +12,7 @@
 #include <limits>           // numeric_limits
 #include <atomic>
 #include <algorithm>
-
+#include <functional>
 #if defined __GNUC__
 #define likely(x) __builtin_expect ((x), 1)
 #define unlikely(x) __builtin_expect ((x), 0)
@@ -25,31 +25,8 @@ namespace wjp
 {
 using str=const std::string&; // abbr.
 
-static inline std::string qerror_str(str what, uint16_t level)
-{
-    static std::string errlevels[3]={"whoops | ", "panic | ", "crash | "};
-    return errlevels[level] + what + std::string(" | strerror: ")+strerror(errno);
 }
 
-class qerror : public std::runtime_error
-{
-public:
-    enum error_level : uint16_t{
-        WHOOPS=0, // resource unavailable or input illegal; properly handled (or ignored)
-        PANIC=1, // unknown error caught; report it for debugging purpose
-        CRASH=2 // fatal error detected; logical to abort
-    };
-    qerror(str what, error_level level=WHOOPS) 
-        : runtime_error(qerror_str(what, level)), error_level_(level){}
-    error_level error_level_;    
-};
+#define QAIO
+#include "error.h"
 
-//If is_error is very unlikely(less than say 5% chance) to be true, this function could potentially enhance branch prediction.
-static inline qerror_if(bool is_error, const std::string& err_msg){
-    if(unlikely(is_error)){
-        throw qerror(err_msg);
-    }
-}
-
-
-}

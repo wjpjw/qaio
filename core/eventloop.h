@@ -18,7 +18,7 @@ public:
     }
 
     // allow user created instances in rare meaningful cases
-    eventloop(){}
+    eventloop(): thread_(){}
 
     // run in current thread (& block)
     void                    run()
@@ -52,17 +52,17 @@ public:
         epoller_.mod(fd, events_old, events_append, ev_data);
     }
     
-    thr                     backgroud_thread(){
+    thread                  backgroud_thread(){
         return thread_;
     }
     //@todo: use lockfree or fine-grained concurrent list
     void                    add_to_be_removed(io_event* io_event_)
     {
-        lock_guard lk(mtx_);
+        lock lk(mtx_);
         to_be_removed_.push_back(io_event_);
     }
 private:
-    thr                     thread_;
+    thread                  thread_;
     epoller                 epoller_; //thread-safe
     bool                    shutdown_;
     mutex                   mtx_;
@@ -75,8 +75,8 @@ private:
 // 通常io_event应该由用户代码持有
 class io_event{
 public:    
-    io_event(){} // stl compat
-    io_event(std::function<void()> cb, int fd) : cb_(cb) , closed_(false), closing_(false), reap_(false), events_mask_(0), fd_(fd)
+    io_event() : cv_(mtx_) {} // stl compat
+    io_event(std::function<void()> cb, int fd) : cb_(cb) , closed_(false), closing_(false), reap_(false), events_mask_(0), fd_(fd), cv_(mtx_)
     {
         eventloop::foo().add_event(fd);
     }
@@ -95,7 +95,7 @@ public:
 
     void                    term()
     {
-        lock_guard lk(mtx_);
+        lock lk(mtx_);
         if(!closing_){
             closing_=true;
             shutdown(fd_, SHUT_RDWR); 
@@ -104,7 +104,7 @@ public:
     }
     void                    rearm(int events)
     {
-        lock_guard lk(mtx_);
+        lock lk(mtx_);
         if(!closing_){
             eventloop::foo().rearm_event(fd_, events_mask_, events, this);
         }
