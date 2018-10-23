@@ -25,7 +25,7 @@ void        mutex::unlock(){
 thread::thread(bool join) : join(join), routine(nullptr)
 {}
 
-thread::thread(std::function<void(void)> thread_func, bool join) 
+thread::thread(std::function<void(void)> thread_func, bool join=true) 
     : join(join), routine(thread_func)
 {
 }

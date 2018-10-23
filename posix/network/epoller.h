@@ -9,7 +9,7 @@ namespace wjp{
 The event argument describes the object linked to the file descriptor fd. The struct epoll_event is defined as :
 
 typedef union epoll_data {
-    void        *ptr;
+    void        *ptr;  
     int          fd;
     uint32_t     u32;
     uint64_t     u64;
@@ -60,15 +60,20 @@ ET mode still seems broken. See:
 //@thread-safe
 class epoller{
 public:
+    constexpr static int max_nr_epoll_events=32; 
     epoller();
     ~epoller();
-    void                    add(int fd);
+    //void* ev_data is stored in event.data.ptr
+    void                    add(int fd, void* ev_data);
     void                    mod(int fd, int events_new, void* ev_data);
     void                    mod(int fd, int events_old, int events_append, void* ev_data);
     void                    del(int fd);
+    int                     wait();
     int                     fd() const noexcept {return epoll_fd_;}
+    struct epoll_event*     events(){return events_;}
 private:
     int                     epoll_fd_;
+    struct epoll_event      events_[max_nr_epoll_events];
 };
 
 

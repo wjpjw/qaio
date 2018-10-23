@@ -9,6 +9,7 @@ namespace wjp{
     pthread based thread abstraction
 */
 class convar;
+
 class mutex{
 public:
     mutex() noexcept;
@@ -19,6 +20,7 @@ private:
     pthread_mutex_t mtx;
 };
 
+// wjp::lock is a simple RAII wrapper for mutex
 class lock{
 public:
     explicit lock(mutex&mtx):mtx(mtx){mtx.lock();}
@@ -27,6 +29,7 @@ private:
     mutex& mtx;
 };
 
+// wjp::convar is binded with a mutex; a little bit different from mainstream design
 class convar{
 public:
     convar(mutex&mtx);
@@ -47,11 +50,11 @@ private:
 */
 class thread{
 public:
-    thread(bool join=true);
-    thread(std::function<void(void)>, bool);
+    thread(bool join=true); //d-tor join()s if join set true; detach()s otherwise
+    thread(std::function<void(void)>, bool join=true);
     ~thread();
     void        set(std::function<void(void)>);
-    void        run();
+    void        run(); 
     bool        is_current_thread()
     {
         return pthread_self() == thr;

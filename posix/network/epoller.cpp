@@ -16,12 +16,12 @@ epoller::~epoller()
     close(epoll_fd_);
 }
 
-void                    epoller::add(int fd){
+void                    epoller::add(int fd, void* ev_data){
     fcntl(fd, F_SETFD, FD_CLOEXEC);
     fcntl(fd, F_SETFL, O_NONBLOCK);
     struct epoll_event ee;
     ee.events=0;
-    ee.data.ptr=this;
+    ee.data.ptr=ev_data;
     qerror_if ((epoll_ctl(epoll_fd_, EPOLL_CTL_ADD, fd, &ee)) != 0, "Fail to add epoll event");
 }
 
@@ -43,6 +43,12 @@ void                    epoller::del(int fd){
     qerror_if(epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, fd, &ee)!=0, "Fail to del epoll event");
 }
 
+int                     epoller::wait()
+{
+    int n = epoll_wait(epoll_fd_, events_, max_nr_epoll_events, -1);
+    qerror_if(n<0, "epoll_wait failed");
+    return n; 
+}
 
 
     

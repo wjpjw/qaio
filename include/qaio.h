@@ -23,7 +23,18 @@
 
 namespace wjp
 {
-using str=const std::string&; // abbr.
+using str=const std::string&; // abbr. 
+/*
+Why not c-style callback?
+-- c style function pointer plus void* args looks dangerous and ugly
+
+Why is std::function<void()> the only prototype?
+-- There are too many function prototypes; it's hard to define std::function for all of them. And it's even harder to come up with a name for them. 
+
+How do you pass args?
+-- I think lambda capture can replace args in majority of use cases; this lib is designed exlusively for modern c++ users.
+*/
+using func=std::function<void()>; // single prototype for all callbacks
 
 }
 
