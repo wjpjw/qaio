@@ -1,5 +1,5 @@
 include_directories(../posix/)
 link_directories(../posix/)
 aux_source_directory(. DIRSRCS)
-add_library(core SHARED ${DIRSRCS})
-target_link_libraries(core posix)
+add_library(utils ${DIRSRCS})
+target_link_libraries(utils posix)

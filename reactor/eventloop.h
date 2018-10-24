@@ -8,14 +8,6 @@
 
 namespace wjp{
 
-// event* is stored in epoll_event.data.ptr
-class event{
-public:
-    virtual int fd()const noexcept=0; // file descriptor is the common interface for sockets, normal file,  
-    virtual void cb(uint32_t event_flag)=0; // called on epoll events
-
-};
-
 class eventloop{
 protected:
     constexpr static uint32_t enabled=EPOLLIN|EPOLLOUT|EPOLLERR;
