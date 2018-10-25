@@ -13,6 +13,8 @@
 #include <atomic>
 #include <algorithm>
 #include <functional>
+#include <memory>
+
 #if defined __GNUC__
 #define likely(x) __builtin_expect ((x), 1)
 #define unlikely(x) __builtin_expect ((x), 0)

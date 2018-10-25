@@ -28,4 +28,8 @@ add_subdirectory(reactor)
 add_subdirectory(example)
 add_subdirectory(utils)
 add_subdirectory(posix)
+add_subdirectory(async)
+#add_subdirectory(service)
+add_subdirectory(transport)
+#add_subdirectory(highermq)
 
