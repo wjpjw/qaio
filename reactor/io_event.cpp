@@ -41,7 +41,7 @@ void                    io_event::cb(uint32_t event_flag)
         cb_(event_flag);
     }else{
         // threadpool accepts function<void()> type only; there is a way to work around it
-        reactor_threadpool::me().execute([event_flag]{
+        eventloop::tp().execute([event_flag]{
             cb_(event_flag);
         });
     }

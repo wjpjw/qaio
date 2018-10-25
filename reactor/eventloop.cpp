@@ -17,19 +17,11 @@ void                    eventloop::loop()
     }
 }
 
-// run in a background thread
-void                    eventloop::kick_it_off()
-{
-    thread_.set([this]{
-        loop();
-    });
-    thread_.run();
-}
-
 void                    eventloop::efd_clear()
 {
     efd_recv(event_fd_);
 }
+
 void                    eventloop::efd_notify()
 {
     efd_send(event_fd_);
