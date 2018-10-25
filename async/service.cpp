@@ -1,4 +1,5 @@
 #include "service.h"
+#include "job.h"
 
 namespace wjp{
 

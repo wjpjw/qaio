@@ -1,10 +1,9 @@
 #pragma once
 
 #include "qaio.h"
-#include "job.h"
 
 namespace wjp{
-
+class job;
 // qaio's "service threads" are a class of threads binded with never-ending routines; 
 
 // service is provided by a collection of these service threads
@@ -16,7 +15,7 @@ public:
     void        start();
     void        post_job(std::shared_ptr<job> job_);
 private:
-    void       init_thread(int index);
+    void        init_thread(int index);
     bool        add_one();
     void        remove_one();
     struct service_thread{
