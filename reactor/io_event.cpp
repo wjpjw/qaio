@@ -1,9 +1,9 @@
 #include "io_event.h"
-#include "reactor_threadpool.h"
+#include "eventloop.h"
 
 namespace wjp{
 
-io_event::io_event(std::function<void(uint32_t)> cb, int fd, bool fast=false) : cb_(cb) , close_(false), events_mask_(0), fd_(fd), cv_(mtx_), fast_(fast)
+io_event::io_event(int fd, cb_func cb) : cb_(cb) ,fd_(fd)
 {
     eventloop::me().add_event(fd);
 }
@@ -16,9 +16,10 @@ io_event::~io_event()
 
 void                    io_event::term()
 {
-    lock lk(mtx_);
+    mtx_.lock();
     if(!close_){
         close_=true;
+        mtx_.unlock();
         shutdown(fd_, SHUT_RDWR); 
         eventloop::me().del_event(fd_);
     }
@@ -31,20 +32,19 @@ void                    io_event::rearm(int events)
     }
 }
 
-int                     io_event::fd()const noexcept{return fd_;}
+void                    io_event::set_cb(cb_func cb)
+{
+    cb_=cb;
+}
+
+int                     io_event::fd() const noexcept
+{
+    return fd_;
+}
 
 void                    io_event::cb(uint32_t event_flag)
 {
-    // cb can be called without mtx_ protection
-    if(fast_){
-        // fast_==true indicates that this cb can finish boundedly therefore it does not need to be pushed into threadpool
-        cb_(event_flag);
-    }else{
-        // threadpool accepts function<void()> type only; there is a way to work around it
-        eventloop::tp().execute([event_flag]{
-            cb_(event_flag);
-        });
-    }
+    cb_(event_flag);
 }
 
 
